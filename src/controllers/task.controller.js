@@ -7,7 +7,6 @@ export const getTasks = async (req, res) => {
         user: req.user.id  //Con esto le digo que me traiga solo las tareas del user que esta logeado
     }).populate('user');
     res.json(tasks)
-
 }
 
 
@@ -22,7 +21,6 @@ export const createTask = async (req, res) => {
     })
     const savedTask = await newTask.save();
     res.json(savedTask)
-
 }
 
 
@@ -32,7 +30,6 @@ export const getTaskById = async (req, res) => {
     if(!task) return res.status(404).send({message: 'Task not found'})
 
     res.json(task)
-
 }
 
 
@@ -42,7 +39,6 @@ export const deleteTask = async (req, res) => {
     if(!task) return res.status(404).send({message: 'Task not found'})
 
     res.sendStatus(204)
-
 }
 
 
@@ -52,5 +48,4 @@ export const updateTask = async (req, res) => {
     if(!task) return res.status(404).send({message: 'Task not found'})
 
     res.json(task)
-
 }
