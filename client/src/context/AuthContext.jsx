@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { loginRequest, registerRequest } from "../api/auth";
+import { loginRequest, registerRequest, verifyTokenRequest } from "../api/auth";
 import Cookies from 'js-cookie'
 
 
@@ -18,7 +18,8 @@ export const AuthProvider = ({children}) => {
 
     const [ user, setUser ] = useState(null);
     const [ isAuthenticated, setIsAuthenticated ] = useState(false);
-    const [ errors, setErrors ] = useState([])
+    const [ errors, setErrors ] = useState([]);
+    const [ loading, setLoading ] = useState(true)
 
     const signUp = async(user) => {
 
@@ -56,21 +57,47 @@ export const AuthProvider = ({children}) => {
     }, [errors]);
 
 
+
+
     useEffect(() => {
-        const cookies = Cookies.get();
-        if(cookies.token) {
-            console.log(cookies.token)
+        async function checkLogin(){
+            const cookies = Cookies.get();
+            if(!cookies.token) {
+                setIsAuthenticated(false)
+                setLoading(false);
+                setUser(null)
+            }
+                try {
+                    const res = await verifyTokenRequest(cookies.token)
+                    if(!res.data) {
+                        setIsAuthenticated(false);
+                        setLoading(false);
+                        return;
+                    }
+                    
+                    setIsAuthenticated(true)
+                    setUser(res.data)
+                    setLoading(false)
+                } catch (error) {
+                    setIsAuthenticated(false)
+                    setUser(null)
+                    setLoading(false);
+
+                }
+                
         }
+        checkLogin()
     }, [])
 
 
     return(
         <AuthContext.Provider value={{
             signUp,
+            signIn,
             user,
             isAuthenticated,
             errors,
-            signIn
+            loading
         }}>
             {children}
         </AuthContext.Provider>
