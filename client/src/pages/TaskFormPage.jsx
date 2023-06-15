@@ -1,15 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTasks } from '../context/TaskContext.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 export const TaskFormPage = () => {
 
 
   const { register, handleSubmit } = useForm();
-  const { createTask } = useTasks();
-  const navigate = useNavigate()
+  const { createTask, editTask } = useTasks();
+  const navigate = useNavigate();
+  const params = useParams();
+
+  useEffect(() => {
+    if(params.id) {
+      editTask(params.id)
+    }
+  }, [])
 
   const onSubmit = handleSubmit((data) => {
     createTask(data);
