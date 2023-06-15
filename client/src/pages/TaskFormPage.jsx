@@ -8,16 +8,16 @@ export const TaskFormPage = () => {
 
   const { register, handleSubmit } = useForm();
   const { createTask } = useTasks();
-  console.log(createTask)
+ 
 
-  const onSubmut = handleSubmit((data) => {
-    console.log(data)
+  const onSubmit = handleSubmit((data) => {
+    createTask(data)
   })
 
   return (
     <div className='bg-zinc-800 max-w-md w-full p-10 rounded-md'>
 
-      <form onSubmit={onSubmut}>
+      <form onSubmit={onSubmit}>
         <input 
           type="text" 
           placeholder='Title' 
