@@ -22,22 +22,24 @@ export const TaskFormPage = () => {
         const task = await editTask(params.id)  
         setValue('title', task.title)
         setValue('description', task.description)
+        setValue('date', dayjs(task.date).utc().format('YYYY-MM-DD'))
       }
     }
     loadTask()
   }, [])
 
   const onSubmit = handleSubmit((data) => {
+    const dateValid = {
+      ...data,
+      date: data.date ? dayjs.utc(data.date).format() : dayjs.utc().format()
+    }
+
+    if(data.date) dateValid.date = dayjs.utc(data.date).format()
+
     if(params.id){
-      updateTask(params.id, {
-        ...data,
-        date: dayjs.utc(data.date).format()
-      });
+      updateTask(params.id, dateValid);
     } else {
-      createTask({
-        ...data,
-        date: dayjs.utc(data.date).format()
-      });
+      createTask(dateValid);
     }
     navigate('/tasks')
   })
