@@ -21,6 +21,10 @@ export const RegisterPage = () => {
 
 
   return (
+
+    <div className='flex h-[calc(100vh-100px)] items-center justify-center'>
+
+
     <div className='bg-zinc-800 max-w-md p-10 rounded-md'>
 
         {
@@ -31,6 +35,7 @@ export const RegisterPage = () => {
             ))
         }
 
+            <h1 className='text-3xl font-bold my-2'>Register</h1>
         <form onSubmit={onSubmit}>
             <input type="text" {...register('username', {required: true})} 
                 className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2'
@@ -64,7 +69,7 @@ export const RegisterPage = () => {
                 )
             }
 
-            <button type='submit'>
+            <button type='submit' className='bg-sky-500 text-white px-4 py-2 rounded-md my-2'>
                 Register
             </button>
         </form>
@@ -75,5 +80,7 @@ export const RegisterPage = () => {
             <Link to='/login' className='text-sky-500'>Login</Link>
         </div>
     </div>
+    </div>
+
   )
 }
