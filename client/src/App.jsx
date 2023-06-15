@@ -8,12 +8,14 @@ import { TaskFormPage } from './pages/TaskFormPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { ProtectedRoute } from './ProtectedRoute';
 import { TaskProvider } from './context/TaskContext.jsx';
+import { NavBar } from './components/NavBar';
 
 function App() {
   return (
     <AuthProvider>
       <TaskProvider>
         <BrowserRouter>
+        <NavBar />
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/login' element={<LoginPage /> } />

@@ -9,7 +9,6 @@ export const TasksPage = () => {
 
   useEffect(() => {
     getTasks()
-    console.log(tasks)
   }, [])
 
   if(tasks.length === 0) return (<h1>No tasks</h1>)
