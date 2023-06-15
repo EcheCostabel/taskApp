@@ -34,8 +34,12 @@ export function TaskProvider({children}) {
     }
 
     const deleteTask = async( id ) => {
-        const res = await deleteTasksRequest(id);
-        setTasks(tasks.filter(task => task._id !== id))
+        try {
+            const res = await deleteTasksRequest(id);
+            setTasks(tasks.filter(task => task._id !== id))
+        } catch (error) {
+            
+        }
     }
 
     return (

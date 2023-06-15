@@ -1,5 +1,6 @@
-import React from 'react'
-import { useTasks } from '../context/TaskContext'
+import React from 'react';
+import { useTasks } from '../context/TaskContext';
+import { Link } from 'react-router-dom'
 
 export const TaskCard = ({task}) => {
 
@@ -12,7 +13,7 @@ export const TaskCard = ({task}) => {
         <h1 className='text-2xl font-bold'>{task.title}</h1>
             <div className='flex gap-x-2 items-center'>
                 <button onClick={() => deleteTask(task._id)}>Delete</button>
-                <button>Edit</button>
+                <Link to={`/tasks/${task._id}`} >Edit</Link>
             </div>
        </header>
         <p className='text-slate-300 '>{task.description}</p>
