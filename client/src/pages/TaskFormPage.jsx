@@ -7,19 +7,30 @@ import { useNavigate, useParams } from 'react-router-dom';
 export const TaskFormPage = () => {
 
 
-  const { register, handleSubmit } = useForm();
-  const { createTask, editTask } = useTasks();
+  const { register, handleSubmit, setValue } = useForm();
+  const { createTask, editTask, updateTask } = useTasks();
   const navigate = useNavigate();
   const params = useParams();
 
-  useEffect(() => {
-    if(params.id) {
-      editTask(params.id)
+ 
+
+  useEffect(() => {   //Esto es para cuando toco editar me abra este componente pero con los inputs cargados
+    const loadTask = async() => {
+      if(params.id) {
+        const task = await editTask(params.id)  
+        setValue('title', task.title)
+        setValue('description', task.description)
+      }
     }
+    loadTask()
   }, [])
 
   const onSubmit = handleSubmit((data) => {
-    createTask(data);
+    if(params.id){
+      updateTask(params.id, data);
+    } else {
+      createTask(data);
+    }
     navigate('/tasks')
   })
   
